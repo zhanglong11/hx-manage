@@ -1,0 +1,104 @@
+.contentWrapper {
+  padding: 10px;
+  color: red;
+  height: calc(100vh - 150px) !important;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.headWrapper {
+  flex: 0 0 50px;
+  padding-left: 20px;
+  height: 50px;
+  line-height: 50px;
+}
+.topTabs {
+  flex: 1 0 60vh;
+  overflow: auto;
+  /deep/ .el-tabs__header {
+    height: 50px;
+  }
+  /deep/ .el-tabs__content {
+    height: calc(100% - 70px);
+    .el-tab-pane {
+      height: 100%;
+      overflow: auto;
+    }
+  }
+}
+.wrapper {
+  flex: 1 0 60vh;
+  height: 100%;
+  display: flex;
+  overflow: auto;
+  .leftBlock {
+    height: 100%;
+    overflow: auto;
+    width: 420px;
+    padding-top: 20px;
+  }
+  .rightBlock {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+    overflow: auto;
+    > div {
+      padding: 0 0 10px 0;
+    }
+    .el-card {
+      overflow: auto;
+      &:nth-child(1) {
+        max-height: 40%;
+      }
+      &:nth-child(2) {
+        flex: 1;
+      }
+    }
+    .topTable {
+      min-height: 200px;
+      max-height: 500px;
+      overflow: auto;
+      /deep/ .col--ellipsis {
+        height: 26px !important;
+      }
+    }
+    /deep/ .el-tabs__item {
+      height: 20px;
+      line-height: 20px;
+    }
+  }
+}
+.footerButton {
+  margin-top: 15px;
+  text-align: right;
+  margin-right: 100px;
+}
+.headWrapper {
+  height: 60px;
+  border: 1px #eee solid;
+}
+.statusContainer {
+  float: right;
+  margin-top: 20px;
+  margin-right: 20px;
+  display: flex;
+  font-weight: bolder;
+  .content {
+    color: #999999;
+  }
+  .statusValue {
+    margin-left: 5px;
+    color: #666666;
+  }
+}
+/deep/ .vxe-body--column {
+  height: 26px !important;
+  .vxe-button {
+    height: 20px;
+    padding: 0 8px;
+  }
+  .vxe-input {
+    height: 24px !important;
+  }
+}

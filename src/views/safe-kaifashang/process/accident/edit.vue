@@ -1,0 +1,124 @@
+<template>
+  <div class="is-Footer">
+    <section class="edit-section">
+      <el-form ref="form" :model="form" :rules="rules" class="form" label-width="240px">
+        <el-form-item label="事故类型" prop="accidentType">
+          <el-select v-model="form.accidentType" class="inputStyle">
+            <el-option v-for="item in accidentTypeList" :key="item.value" :value="item.value" :label="item.label" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="事故等级" prop="accidentLevel">
+          <el-select v-model="form.accidentLevel" class="inputStyle">
+            <el-option v-for="item in accidentLevelList" :key="item.value" :value="item.value" :label="item.label" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="事故性质" prop="accidentNature">
+          <el-select v-model="form.accidentNature" class="inputStyle">
+            <el-option v-for="item in accidentNatureList" :key="item.value" :value="item.value" :label="item.label" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="事故日期" prop="accidentDate">
+          <el-date-picker v-model="form.accidentDate" value-format="yyyy-MM-dd HH:MM:SS" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="事故地点" prop="accidentPosition">
+          <el-input v-model="form.accidentPosition" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="死亡人数" prop="deathNumber">
+          <InputNumber v-model="form.deathNumber" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="重伤人数" prop="seriousInjuryNumber">
+          <InputNumber v-model="form.seriousInjuryNumber" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="轻伤人数" prop="minorWoundNumber">
+          <InputNumber v-model="form.minorWoundNumber" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="事故描述" prop="accidentDescription">
+          <el-input v-model="form.accidentDescription" type="textarea" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="直接经济损失（万元）" prop="directEconomicLoss">
+          <InputNumber v-model="form.directEconomicLoss" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="事故主要原因" prop="accidentReason">
+          <el-input v-model="form.accidentReason" type="textarea" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="对项目处罚的政府监管部门" prop="governmentSuperviseDepartment">
+          <el-input v-model="form.governmentSuperviseDepartment" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="处罚决定下达日期" prop="punishmentDate">
+          <el-date-picker v-model="form.punishmentDate" value-format="yyyy-MM-dd HH:MM:SS" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="处罚条款" prop="punishmentClause">
+          <el-input v-model="form.punishmentClause" type="textarea" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="上传" prop="files">
+          <FileEdit v-model="form.files" class="inputStyle" />
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" type="textarea" class="inputStyle" />
+        </el-form-item>
+      </el-form>
+    </section>
+    <div class="footer-btn">
+      <el-button @click="cancel">取消</el-button>
+      <el-button type="primary" @click="submit">保存</el-button>
+    </div>
+  </div>
+</template>
+<script>
+import accidentTypeList from '../../lib/accidentTypeList'
+import accidentLevelList from '../../lib/accidentLevelList'
+import accidentNatureList from '../../lib/accidentNatureList'
+import Api from '../../api/index'
+export default {
+  name: 'Edit',
+  components: {},
+  data() {
+    return {
+      accidentTypeList,
+      accidentLevelList,
+      accidentNatureList,
+      form: {},
+      rules: {
+        accidentType: { required: true, message: '必填' },
+        accidentLevel: { required: true, message: '必填' },
+        accidentNature: { required: true, message: '必填' },
+        accidentDate: { required: true, message: '必填' },
+        accidentPosition: { required: true, message: '必填' },
+        directEconomicLoss: { required: true, message: '必填' },
+        accidentReason: { required: true, message: '必填' },
+        punishmentDate: { required: true, message: '必填' },
+        governmentSuperviseDepartment: { required: true, message: '必填' }
+      }
+    }
+  },
+  created() {
+    if (this.$route.params.id) {
+      this.refresh()
+    }
+  },
+  methods: {
+    async refresh() {
+      let res = await Api.accidentResolve.detail(this.$route.params.id, {})
+      this.form = res.data
+    },
+    async submit() {
+      this.$refs.form.validate(async valid => {
+        if (valid) {
+          let res = this.$route.params.id
+            ? await Api.accidentResolve.update({ ...this.form })
+            : await Api.accidentResolve.add({ ...this.form })
+          this.$message.success('保存成功')
+          this.$router.go(-1)
+        }
+      })
+    },
+    cancel() {
+      this.$router.go(-1)
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+@import '../../style.less';
+</style>

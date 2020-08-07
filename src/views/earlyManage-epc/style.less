@@ -1,0 +1,42 @@
+.inputStyle {
+  width: 300px;
+  /deep/.el-input__inner {
+    text-align: left;
+  }
+}
+.outContainer {
+  height: calc(100vh - 90px) !important;
+}
+.app-main .is-Footer {
+  height: calc(100vh - 150px) !important;
+  min-height: 0;
+  padding: 10px;
+  .indexContainer {
+    height: 100%;
+    overflow: auto;
+  }
+}
+.rowLine {
+  margin: 10px 0;
+  display: flex;
+}
+.lrCellInfo {
+  display: flex;
+  align-items: center;
+  padding: 2px 10px 2px 0;
+  min-height: 30px;
+  font-size: 16px;
+  .lrCellLabel {
+    width: 120px;
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    font-size: 14px;
+    color: #606266;
+    line-height: 32px;
+    padding: 0 12px 0 0;
+  }
+  .lrCellValue {
+    flex: 1;
+  }
+}
